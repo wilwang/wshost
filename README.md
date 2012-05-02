@@ -31,7 +31,7 @@ new wshost(echoService).listen(3000);
 * The host and port for your StatsD server will be pulled from the following environment variables:
   - STATSD_HOST (default = localhost)
   - STATSD_PORT (default = 8125)
-* Includes connect middleware to publish the following stats about each request to your StatsD server:
+* The following stats will be published for each request:
 	- response time
 	- call count increment
 
