@@ -1,5 +1,5 @@
 {
-  "name"         : "ws",  
+  "name"         : "wshost",
   "description"  : "A generic host for exposing objects as web services.",
   "author"       : "Chatham Financial Corp <oss@chathamfinancial.com>",
   "version"      : "0.1.0",
@@ -9,5 +9,5 @@
                      "url": "" },
   "engines"      : { "node": ">= 0.4.0" },
   "dependencies" : { "director" : "1.0.10" },
-  "main"         : "./ws.js"
+  "main"         : "./wshost.js"
 }

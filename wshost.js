@@ -1,7 +1,7 @@
 var http = require('http')
   , director = require('director');
 
-module.exports = function ws(service) {
+module.exports = function wshost(service) {
   this.service = service;
 
   var postActionWrapper = function() {
