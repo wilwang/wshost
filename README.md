@@ -16,7 +16,7 @@ var echoService = {
     params: {
       message: { required: true, type: 'string' } // PARAMETER VALIDATION IS COMING SOON!
     },
-    verbs: ['GET', 'POST'], // <OPTIONAL> SPECIFY VERBS TO ROUTE, DEFAULT IS GET ONLY
+    verbs: ['GET', 'POST'], // <OPTIONAL> SPECIFY VERBS TO ROUTE, DEFAULT = GET
     action: function(params, callback) {
       callback({ message: params.message });
     }
@@ -26,9 +26,12 @@ var echoService = {
 new wshost(echoService).listen(3000);
 ```
 
-## Features
+## StatsD Middleware
 
-* Includes connect middleware to publish the following stats with each request:
+* The host and port for your StatsD server will be pulled from the following environment variables:
+  - STATSD_HOST (default = localhost)
+  - STATSD_PORT (default = 8125)
+* Includes connect middleware to publish the following stats about each request to your StatsD server:
 	- response time
 	- call count increment
 
