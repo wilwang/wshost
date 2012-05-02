@@ -1,4 +1,5 @@
 var http = require('http')
+  , connect = require('connect')
   , director = require('director');
 
 module.exports = function wshost(service) {
@@ -90,19 +91,21 @@ module.exports = function wshost(service) {
   this.listen = function(port) {
     var router = createRouter(this.service);
 
-    var server = http.createServer(function(req, res) {
-      req.chunks = [];
-      req.on('data', function(chunk) {
-        req.chunks.push(chunk);
-      });
+    var server = connect()
+      .use(require('./middleware/stat')())
+      .use(function(req, res) {
+        req.chunks = [];
+        req.on('data', function(chunk) {
+          req.chunks.push(chunk);
+        });
 
-      router.dispatch(req, res, function(err) {
-        if(err) {
-          res.writeHead(404);
-          res.end(JSON.stringify(err));
-        }
+        router.dispatch(req, res, function(err) {
+          if(err) {
+            res.writeHead(404);
+            res.end(JSON.stringify(err));
+          }
+        });
       });
-    });
 
     server.listen(3000);
   };
