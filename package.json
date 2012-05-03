@@ -1,15 +1,30 @@
 {
-  "name"         : "wshost",
-  "description"  : "A generic host for exposing objects as web services.",
-  "author"       : "Chatham Financial Corp <oss@chathamfinancial.com>",
-  "version"      : "0.1.1",
-  "maintainers"  : [ "Tim Savery <tsavery@chathamfinancial.com>" ],
-  "contributors" : [{ "name": "Tim Savery", "email": "tsavery@chathamfinancial.com" }],
-  "repository"   : { "type": "git", 
-                     "url": "https://github.com/Chatham/wshost" },
-  "engines"      : { "node": ">= 0.4.0" },
-  "dependencies" : { "director"    : "1.0.10",
-                     "connect"     : "2.2.1",
-                     "node-statsd" : "0.0.2" },
-  "main"         : "./wshost.js"
+  "name": "wshost",
+  "description": "A generic host for exposing objects as web services.",
+  "author": "Chatham Financial Corp <oss@chathamfinancial.com>",
+  "version": "0.1.1",
+  "maintainers": [ 
+    "Tim Savery <tsavery@chathamfinancial.com>" 
+  ],
+  "contributors": [
+    { "name": "Tim Savery", "email": "tsavery@chathamfinancial.com" }
+  ],
+  "repository": { 
+    "type": "git", 
+    "url": "https://github.com/Chatham/wshost" 
+  },
+  "engines": { 
+    "node": ">= 0.4.0" 
+  },
+  "dependencies": { 
+    "director": "1.0.10",
+    "connect": "2.2.1",
+    "node-statsd": "0.0.2" 
+  },
+  "devDependencies": { 
+    "nodeunit": "0.7.4",
+    "request": "2.9.202" 
+  },
+  "main": "./wshost.js",
+  "scripts": { "test": "nodeunit test" }
 }

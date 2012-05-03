@@ -2,9 +2,7 @@ var http = require('http')
   , connect = require('connect')
   , director = require('director');
 
-module.exports = function wshost(service) {
-  this.service = service;
-
+module.exports = function wshost(service, options) {  
   var postActionWrapper = function() {
     var key = this.req.url.replace('/', '');
     
@@ -88,25 +86,46 @@ module.exports = function wshost(service) {
     return new director.http.Router(routes);
   };
 
-  this.listen = function(port) {
-    var router = createRouter(this.service);
+  var createServer = function(service, options) {
+    if (!options) options = {};
 
-    var server = connect()
-      .use(require('./middleware/stat')())
-      .use(function(req, res) {
-        req.chunks = [];
-        req.on('data', function(chunk) {
-          req.chunks.push(chunk);
-        });
+    var router = createRouter(service);
 
-        router.dispatch(req, res, function(err) {
-          if(err) {
-            res.writeHead(404);
-            res.end(JSON.stringify(err));
-          }
-        });
+    var app = connect();
+
+    if (options.stats) {
+      app.use(require('./middleware/stat')())
+    }
+    
+    app.use(function(req, res) {
+      req.chunks = [];
+      req.on('data', function(chunk) {
+        req.chunks.push(chunk);
       });
 
-    server.listen(3000);
+      router.dispatch(req, res, function(err) {
+        if(err) {
+          res.writeHead(404);
+          res.end(JSON.stringify(err));
+        }
+      });
+    });
+
+    return http.createServer(app);
+  };
+
+  this.server = createServer(    
+    service,
+    options
+  );
+
+  this.listen = function(port, callback) {
+    this.server.listen(3000, function() {
+      if (callback) { callback(); }
+    });
+  };
+
+  this.close = function() {
+    this.server.close();
   };
 };
