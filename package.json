@@ -2,7 +2,7 @@
   "name": "wshost",
   "description": "A generic host for exposing objects as web services.",
   "author": "Chatham Financial Corp <oss@chathamfinancial.com>",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "maintainers": [ 
     "Tim Savery <tsavery@chathamfinancial.com>" 
   ],
@@ -14,12 +14,14 @@
     "url": "https://github.com/Chatham/wshost" 
   },
   "engines": { 
-    "node": ">= 0.4.0" 
+    "node": ">= 0.4.0"
   },
   "dependencies": { 
     "director": "1.0.10",
     "connect": "2.2.1",
-    "node-statsd": "0.0.2" 
+    "node-statsd": "0.0.2",
+    "jade": "0.25.0",
+    "node-static": "0.5.9"
   },
   "devDependencies": { 
     "nodeunit": "0.7.4",

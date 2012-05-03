@@ -1,6 +1,7 @@
 var http = require('http')
   , connect = require('connect')
-  , director = require('director');
+  , director = require('director')
+  , UrlGenerator = require('./urlgenerator');
 
 module.exports = function wshost(service, options) {  
   var postActionWrapper = function() {
@@ -40,18 +41,22 @@ module.exports = function wshost(service, options) {
     var routes = {};
 
     for (var key in service) {
+      // do not generate routes for methods that begin with underscore
+      if (key[0] == '_') {
+        continue;
+      }
+
       if (!service[key].verbs || service[key].verbs.length == 0) {
         service[key].verbs = ['GET'];
       }  
       
       for (var verbIndex in service[key].verbs) {
+        var path = new UrlGenerator(key, service[key].params).generateForVerb(
+          service[key].verbs[verbIndex]
+        );
+
         switch (service[key].verbs[verbIndex]) {
           case 'GET': {
-            var path = '/'+key;
-            for (var param in service[key].params) {
-              path += '/:'+param;
-            }
-            
             if (!routes[path]) {
               routes[path] = {
                 get: getActionWrapper
@@ -62,9 +67,7 @@ module.exports = function wshost(service, options) {
             break;
           }
 
-          case 'POST': {        
-            var path = '/'+key;
-
+          case 'POST': {
             if (!routes[path]) {
               routes[path] = {
                 post: postActionWrapper
@@ -92,11 +95,12 @@ module.exports = function wshost(service, options) {
     var router = createRouter(service);
 
     var app = connect();
+    app.use(require('./middleware/doc')(service));
 
-    if (options.stats) {
+    if (options.stats) {      
       app.use(require('./middleware/stat')())
     }
-    
+
     app.use(function(req, res) {
       req.chunks = [];
       req.on('data', function(chunk) {

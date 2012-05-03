@@ -1,0 +1,42 @@
+!!!
+html
+  head
+    title #{name}
+    link(rel='stylesheet', href='/_doc/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/_doc/css/style.css')
+  body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container          
+          a.brand(href='/_doc') #{name}
+     .container       
+       .hero-unit
+         h2 #{name}
+         p #{description}
+       h2 Endpoints
+       - each endpoint in endpoints
+         - if (endpoint[0] != '_')
+           .endpoint-container 
+             h3 #{endpoint.name}
+             p
+               - each path in endpoint.paths
+                 span.label.label-info(style='margin-right:5px;') #{path.verb}
+             p 
+               #{endpoint.description}                          
+               form.form-horizontal(style='margin-top: 20px; padding-top: 20px; border-top: 2px dashed #ddd;')
+                 fieldset
+                   - if (endpoint.params)
+                     - each param in Object.keys(endpoint.params)
+                       .control-group
+                         label.control-label #{param}
+                         .controls
+                           input.input-xlarge(type='text', name='#{param}')
+                           span.help-inline #{endpoint.params[param].type}
+                           p.help-block #{endpoint.params[param].description}
+                    input(type='hidden', name='name', value='#{endpoint.name}')
+                   .form-actions
+                     button.btn.btn-info.try Try It!
+                     button.btn.clear(style='margin-left:5px') Clear
+    script(src='/_doc/js/jquery-1.7.2.min.js')
+    script(src='/_doc/js/bootstrap.min.js')
+    script(src='/_doc/js/index.js')
