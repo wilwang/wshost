@@ -1,10 +1,6 @@
-# wshost
+# wshost [![Build Status](https://secure.travis-ci.org/Chatham/wshost.png?branch=master)](http://travis-ci.org/Chatham/wshost)
 
 `wshost` is a generic host for exposing modules as web services in Node.js.
-
-## Build Status
-
-[![Build Status](https://secure.travis-ci.org/Chatham/wshost.png?branch=master)](http://travis-ci.org/Chatham/wshost)
 
 ## Usage
 
