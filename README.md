@@ -35,6 +35,12 @@ new wshost(echoService).listen(3000);
 	- response time
 	- call count increment
 
+## Documentation and Test Harness
+
+'wshost' will service a documentation page which includes a test harness for each endpoint of your service.  Visit http://[host]:[port]/_doc to view.
+
+![Doc Screenshot](/_readme/screenshot_doc.png)
+
 ## License
 
 (The MIT License)

@@ -3,7 +3,13 @@ var wshost = require('../wshost')
   , testcase = require('nodeunit').testCase;
 
 var echoService = {
+  _meta: {
+    name: 'EchoService',
+    description: 'A simple echo service implementation.'
+  },
+
   echo: {
+    description: 'Echos back the message that you pass.',
     params: {
       message: { required: true, type: 'string' } // PARAMETER VALIDATION IS COMING SOON!
     },
