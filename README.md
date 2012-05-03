@@ -43,7 +43,7 @@ new wshost(echoService).listen(3000);
 
 ## Documentation and Test Harness
 
-`wshost` will service a documentation page which includes a test harness for each endpoint of your service.  Visit http://[host]:[port]/_doc to view.
+`wshost` will service a documentation page which includes a test harness for each endpoint of your service.  Visit `http://[host]:[port]/_doc` to view.
 
 ![Doc Screenshot](https://github.com/Chatham/wshost/raw/master/_readme/screenshot_doc.png)
 
