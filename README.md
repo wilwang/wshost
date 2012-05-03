@@ -16,9 +16,13 @@ var echoService = {
   echo: {
     description: 'Echos back the message that you pass.',
     params: {
-      message: { required: true, type: 'string', description: 'Any old thing you want to enter.' } // PARAMETER VALIDATION IS COMING SOON!
+      message: { 
+        required: true, 
+        type: 'string', 
+        description: 'Any old thing you want to enter.' 
+      } // PARAMETER VALIDATION IS COMING SOON!
     },
-    verbs: ['GET', 'POST'], // <OPTIONAL> SPECIFY VERBS TO ROUTE, DEFAULT = GET
+    verbs: ['GET', 'POST'], // <OPTIONAL>, DEFAULT = GET
     action: function(params, callback) {
       callback({ message: params.message });
     }
