@@ -12,15 +12,21 @@
 var wshost = require('wshost');
 
 var echoService = {
+  _meta: {
+    name: 'EchoService',
+    description: 'A simple echo service implementation.'
+  },
+
   echo: {
+    description: 'Echos back the message that you pass.',
     params: {
-      message: { required: true, type: 'string' } // PARAMETER VALIDATION IS COMING SOON!
+      message: { required: true, type: 'string', description: 'Any old thing you want to enter.' } // PARAMETER VALIDATION IS COMING SOON!
     },
     verbs: ['GET', 'POST'], // <OPTIONAL> SPECIFY VERBS TO ROUTE, DEFAULT = GET
     action: function(params, callback) {
       callback({ message: params.message });
     }
-  }	
+  } 
 };
 
 new wshost(echoService).listen(3000);
@@ -37,9 +43,9 @@ new wshost(echoService).listen(3000);
 
 ## Documentation and Test Harness
 
-'wshost' will service a documentation page which includes a test harness for each endpoint of your service.  Visit http://[host]:[port]/_doc to view.
+`wshost` will service a documentation page which includes a test harness for each endpoint of your service.  Visit http://[host]:[port]/_doc to view.
 
-![Doc Screenshot](_readme/screenshot_doc.png)
+![Doc Screenshot](https://github.com/Chatham/wshost/raw/master/_readme/screenshot_doc.png)
 
 ## License
 
