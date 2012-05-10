@@ -124,7 +124,7 @@ module.exports = function wshost(service, options) {
   );
 
   this.listen = function(port, callback) {
-    this.server.listen(3000, function() {
+    this.server.listen(port, function() {
       if (callback) { callback(); }
     });
   };
