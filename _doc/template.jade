@@ -30,8 +30,9 @@ html
                        .control-group
                          label.control-label #{param}
                          .controls
-                           input.input-xlarge(type='text', name='#{param}')
+                           input.input-xlarge(type='text', name='#{param}', optional='#{!endpoint.params[param].required}', qs='#{endpoint.params[param].querystring}')
                            span.help-inline #{endpoint.params[param].type}
+                           p.help-block Required = #{endpoint.params[param].required}
                            p.help-block #{endpoint.params[param].description}
                     input(type='hidden', name='name', value='#{endpoint.name}')
                    .form-actions

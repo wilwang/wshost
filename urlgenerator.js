@@ -3,9 +3,14 @@ module.exports = function UrlGenerator(name, params) {
   this.params = params;
 
   var get = function(name, params) {
-  	var path = '/' + name;
+    var path = '/' + name;
     for (var param in params) {
-      path += '/:' + param;
+			if (params[param].querystring === null || params[param].querystring === false) {
+	      path += '/:' + param;
+				if (!params[param].required) {
+					path += '?'
+				}
+			}
     }
 
     return path;

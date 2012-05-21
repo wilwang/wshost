@@ -3,16 +3,26 @@ $(document).ready(function() {
   	e.preventDefault();
 
   	var params = {};
+		var queryparams = '?';
   	$(this).closest('form').find('input[name]').each(function(index, element) {
-  	  params[$(element).attr('name')] = $(element).val();
+			if ($(element).attr('qs') === 'true') {
+				if ($(element).val() != '') {
+					queryparams += $(element).attr('name') + '=' + escape($(element).val()) + '&';
+				}
+			} else {
+			  params[$(element).attr('name')] = {
+					value: $(element).val()
+				}
+			}
   	});
 
-  	var url = '/'+params.name;
+  	var url = '/'+params.name.value;
   	for (var param in params) {
       if (param != 'name') {
-  	   url += '/'+params[param];
+  	   url += '/'+params[param].value;
   	  }
   	}
+		url += queryparams;
 
   	$.get(url, function(result) {
   	  alert(result);
@@ -22,8 +32,8 @@ $(document).ready(function() {
   $('button.clear').click(function(e) {
   	e.preventDefault();
 
-	$(this).closest('form').find('input[name]').each(function(index, element) {
-	  if ($(element).attr('name') != 'name') {
+		$(this).closest('form').find('input[name]').each(function(index, element) {
+		  if ($(element).attr('name') != 'name') {
   	    $(element).val('');
   	  }
   	});  	
