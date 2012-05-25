@@ -3,24 +3,19 @@ var http = require('http')
   , director = require('director')
   , UrlGenerator = require('./urlgenerator');
 
-function parseQueryParams(queryParamString) {
-	var query = new Object();
 
-	if (queryParamString.length > 0) {
-		var arrayParamPair = queryParamString.split('&');
-
-		for (var paramPair in arrayParamPair) {
-			if (arrayParamPair[paramPair].indexOf('=') >= 0) {
-				var arrayPair = arrayParamPair[paramPair].split('=');
-
-				arrayPair[1] === undefined
-					? query[arrayPair[0]] = null
-					: query[arrayPair[0]] = unescape(arrayPair[1]);
-			}
-		}
-	}
-
-	return query;
+function getQuerystringParamByName(name, url) {
+  name = name.replace(/[\[]/, '\\\[').replace(/[\]]/, '\\\]');
+  
+  var regexS = '[\\?&]' + name + '=([^&#]*)'
+    , regex = new RegExp(regexS)
+    , results = regex.exec(url);
+  
+  if(!results) {
+    return null;
+  }
+  
+  return decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
 module.exports = function wshost(service, options) {  
@@ -40,15 +35,13 @@ module.exports = function wshost(service, options) {
 
   var getActionWrapper = function() {
     var key = this.req.url.replace(/^\/([^\/]*).*$/, '$1');
-		var routeParams;
-		var queryParams = parseQueryParams(this.req._parsedUrl.query);
 
     // convert arguments to params object
     var params = {} , argumentIndex = 0;
     for (var param in service[key].params) {    
       params[param] = (argumentIndex < arguments.length) 
         ? arguments[argumentIndex] 
-        : queryParams[param];
+        : getQuerystringParamByName(param, this.req.url);
 
       argumentIndex++;
     }
